@@ -5,17 +5,6 @@ import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// Jongisizwe
-// const firebaseConfig = {
-//   apiKey: "AIzaSyA3B1hpKNyUUublqCjHuNOx_d_nz8fTcpA",
-//   authDomain: "e-mall-2b44d.firebaseapp.com",
-//   projectId: "e-mall-2b44d",
-//   storageBucket: "e-mall-2b44d.appspot.com",
-//   messagingSenderId: "372464540145",
-//   appId: "1:372464540145:web:e8665d56848e4bb8918c50"
-// };
-
 // Techsynergy Solutions
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_PAYPAL_CLIENT_ID,
