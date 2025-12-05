@@ -39,7 +39,7 @@ const Invoice = () => {
     <div className="invoice-container" style={{width: '100%', height: '98%',overflowY: 'scroll',scrollbarWidth: 'none'}}>
       <div className="invoice-header">
         <h1>INVOICE</h1>
-        <div className="invoice-number">Order Number {order.ordernumber}</div>
+        <div className="invoice-number">Order Number {order.id}</div>
       </div>
 
       <div className="invoice-body">

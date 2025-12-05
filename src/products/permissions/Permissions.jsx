@@ -55,6 +55,7 @@ const PermissionsTab = () => {
 
     let arr = []
     arr = selectedOptions
+    arr.push(0)
     arr.push(100)
 
     var companyid = sessionStorage.getItem('companyid')

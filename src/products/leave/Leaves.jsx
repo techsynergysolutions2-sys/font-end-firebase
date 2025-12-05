@@ -29,7 +29,7 @@ const Leaves = () => {
       var groupid = sessionStorage.getItem('groupid')
 
       let sql = ''
-      if(groupid == '1' || groupid == 1){
+      if(groupid == 1 || groupid == 2){
         sql = `
             SELECT l.*,CONCAT(e.firstname, ' ', e.lastname) AS fullname
             FROM leaves l 

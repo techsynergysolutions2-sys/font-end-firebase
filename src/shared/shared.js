@@ -27,30 +27,19 @@ const fnLogin = () => {
   var permissions = sessionStorage.getItem('permissions')
   var groupid = sessionStorage.getItem('groupid')
 
-  console.log(companyid)
-  console.log(uid)
-  console.log(permissions)
-  console.log(groupid)
-
-  console.log(uid == null)
-
   if( uid == null ){
-    console.log('Check 1')
     return false
   }
 
   if(companyid === null){
-    console.log('Check 2')
     return false
   }
 
   if(permissions == null){
-    console.log('Check 3')
     return false
   }
 
   if(groupid == null){
-    console.log('Check 4')
     return false
   }
 
@@ -85,12 +74,18 @@ const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg", "application/pdf"
 
 // export const url = 'http://192.168.0.6:5000'
 // export const url = 'http://ec2-13-60-191-59.eu-north-1.compute.amazonaws.com:5000'
+
+// Live
 export const url = 'https://app-ihcagnmida-uc.a.run.app'
+export const host_url = 'https://Ebencrm.com'
 
-// export const host_url = 'https://Ebencrm.com'
-export const host_url = 'http://localhost:3000'
 
-export const amou = 4.99
+//Testing
+// export const url = 'http://127.0.0.1:5001/crm-solutions-34e5f/us-central1/app'
+// export const host_url = 'http://localhost:3000'
+
+// export const amou = 4.99
+export const amou = 1.99
 
 
 export const Task_Workflow_Status = [
@@ -313,22 +308,20 @@ export const ticket_priority = [
 ]
 
 export const pages = [
-    {id: 1, title: 'Dashboard'},
-    {id: 2, title: 'Sales'},
-    {id: 3, title: 'Inventory'},
-    {id: 4, title: 'Orders'},
-    {id: 5, title: 'Analytics'},
-    {id: 6, title: 'Tasks'},
-    {id: 7, title: 'Projects'},
-    {id: 8, title: 'Tickets'},
-    {id: 9, title: 'Leave'},
-    {id: 10, title: 'Employees'},
-    {id: 11, title: 'Clients'},
-    {id: 12, title: 'Administrator'},
-    {id: 13, title: 'Departments'},
-    {id: 14, title: 'Groups'},
-    {id: 15, title: 'Permissions'},
-    {id: 16, title: 'Company profile'}
+    // {id: 1, title: 'Dashboard'},
+    {id: 2, title: 'Inventory'},
+    {id: 3, title: 'Orders'},
+    {id: 4, title: 'Analytics'},
+    {id: 5, title: 'Tasks'},
+    {id: 6, title: 'Projects'},
+    {id: 7, title: 'Tickets'},
+    {id: 8, title: 'Leave'},
+    {id: 9, title: 'Employees'},
+    {id: 10, title: 'Clients'},
+    {id: 11, title: 'Departments'},
+    {id: 12, title: 'Permissions'},
+    {id: 13, title: 'Company profile'},
+    {id: 14, title: 'Groups'}
 ]
 
 function getItem(id,label, key, icon, children) {
@@ -386,7 +379,7 @@ export const fnConnectNavigation = (permissions) =>{
 
     var pages = [
       // getItem(1,'Dashboard', '/dashboard',<HomeOutlined /> ,),
-      getItem(2,'Sales', '/inventory', <UnorderedListOutlined />,),
+      getItem(2,'Inventory', '/inventory', <UnorderedListOutlined />,),
       getItem(3,'Orders', '/orders', <ShoppingCartOutlined />,),
       getItem(4,'Analytics', '/analytics', <LineChartOutlined />,),
       getItem(5,'Tasks', '/tasklist',<FontSizeOutlined />),
@@ -398,8 +391,8 @@ export const fnConnectNavigation = (permissions) =>{
       // getItem(12,'Administrator', 'admin', <UserOutlined />, admin),
       getItem(11,'Departments', '/departments', <PartitionOutlined />,),
       getItem(12,'Permissions', '/permissionslist', <SafetyOutlined />,),
-      getItem(13,'Company profile', '/companyprofile', <FolderOpenOutlined />,),
       getItem(14,'Groups', '/groups', <GroupOutlined />,),
+      getItem(13,'Company profile', '/companyprofile', <FolderOpenOutlined />,),
       getItem(0,'Profile', '/profile', <Avatar size='default' src={sessionStorage.getItem('photourl')} />,),
       getItem(100,'Log out', '/login', <LockOutlined />)
     ]
@@ -410,7 +403,7 @@ export const fnConnectNavigation = (permissions) =>{
     }
 
     if(fnCheckExpiryDate == true ){
-      if(sessionStorage.getItem('grouptitle') == 'Administrator'){
+      if(sessionStorage.getItem('groupid') == 1){
           window.location.href = `${host_url}/companyprofile`;
       }else{
         window.location.replace(`${host_url}/login`);
@@ -418,14 +411,14 @@ export const fnConnectNavigation = (permissions) =>{
       }
     }
   
-    if(sessionStorage.getItem('grouptitle') != 'Administrator'){
+    if(sessionStorage.getItem('groupid') != 1){
       
       let st = '' 
       st = sessionStorage.getItem('permissions')
       let arr = st.split(',').map(Number)
      
       pages = pages.filter(page => arr.includes(page.id));
-    }else if(sessionStorage.getItem('grouptitle') == 'Administrator'){
+    }else if(sessionStorage.getItem('groupid') == 1){
       
       pages = pages
     }

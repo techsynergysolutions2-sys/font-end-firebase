@@ -27,11 +27,11 @@ const Inventory = () => {
     const fnFetchData = async () => {
         var companyid = sessionStorage.getItem('companyid')
         let sql = `
-            SELECT p.*, COALESCE(COUNT(DISTINCT op.orderid), 0) AS total_orders
-            FROM products p
-            LEFT JOIN order_products op ON op.productid = p.id AND op.isactive = 1
-            LEFT JOIN orders o ON o.id = op.orderid AND o.isactive = 1 
-            WHERE p.companyid = ${companyid} AND op.isactive = 1
+              SELECT p.*,COALESCE(COUNT(DISTINCT op.orderid), 0) AS total_orders
+              FROM products p
+              LEFT JOIN order_products op ON op.productid = p.id AND op.isactive = 1
+              WHERE p.companyid = ${companyid}
+              GROUP BY p.id;
             `
         
         try {

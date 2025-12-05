@@ -120,16 +120,9 @@ function Register() {
       company['isactive'] = 0;
 
       const data2 = await fnCreateData('company', 'companies', company, 'new');
-      let values = {
-        companyid: data2.insertId,
-        createdby: 0,
-        title:'Administrator'
-      }
-      
-      const data3 = await fnCreateData('groups',"user_groups", values, 'new');
 
       member['uid'] = user.uid
-      member['groupid'] = data3.insertId
+      member['groupid'] = 1
       member['companyid'] = data2.insertId
       const data = await fnCreateData('employees', 'employees', member, 'new');
 
@@ -263,7 +256,7 @@ function Register() {
                     name="firstname"
                     rules={[{ required: true, message: 'Please input your first name!' }]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -273,7 +266,7 @@ function Register() {
                     name="lastname"
                     rules={[{ required: true, message: 'Please input your last name!' }]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -283,7 +276,7 @@ function Register() {
                     name="phone"
                     rules={[{ required: true, message: 'Please input your contact number!' }]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -293,7 +286,7 @@ function Register() {
                       name="dob"
                       rules={[{ required: true, message: 'Please input your date of birth!' }]}
                     >
-                      <input type="datetime-local" />
+                      <input type="datetime-local" style={{ width: '150%'}} />
                     </Form.Item>
                   </div>
 
@@ -312,7 +305,7 @@ function Register() {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -322,7 +315,7 @@ function Register() {
                       name="password"
                       rules={[{ required: true, message: 'Please input your password!' }]}
                     >
-                      <Input.Password />
+                      <Input.Password style={{ width: '150%'}} size='large'/>
                     </Form.Item>
                   </div>
 
@@ -381,7 +374,7 @@ function Register() {
                     name="companyname"
                     rules={[{ required: true, message: 'Please input a company name!' }]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -391,7 +384,7 @@ function Register() {
                     name="country"
                     rules={[{ required: true, message: 'Please input a country!' }]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -401,7 +394,7 @@ function Register() {
                     name="phone"
                     rules={[{ required: true, message: 'Please input your contact number!' }]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -420,7 +413,7 @@ function Register() {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 
@@ -430,7 +423,7 @@ function Register() {
                       name="employee_count"
                       rules={[{type: 'number', min: 1, required: true, message: 'Please input number of employees. Min 1!' }]}
                     >
-                      <InputNumber />
+                      <InputNumber style={{ width: '150%'}}/>
                     </Form.Item>
                   </div>
 

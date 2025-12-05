@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react'
 import {Row,Input,FloatButton,Tooltip  } from 'antd';
 import { PlusOutlined,FormOutlined } from '@ant-design/icons';
-import {fnGetData } from '../../shared/shared';
+import {fnGetData,fnGetDirectData } from '../../shared/shared';
 import {useNavigate } from 'react-router-dom'
 
 
@@ -19,10 +19,20 @@ function Groups() {
   },[])
 
   const fetchGroups = async () => {
+
+    try {
       var companyid = sessionStorage.getItem('companyid')
-      const data = await fnGetData('groups',"user_groups", {companyid: companyid}, { columns: '*'});
+      let sql = `
+                SELECT * from user_groups ug
+                WHERE ug.companyid = ${companyid} OR ug.companyid = 0 AND ug.isactive = 1
+                `
+      const data = await fnGetDirectData('employees',sql);
       setGroups(data);
       setFilteredGroups(data)
+      
+    } catch (error) {
+      
+    }
     };
 
   const fnAddEditGroup = (record) => {
@@ -76,14 +86,24 @@ function Groups() {
                       )
                     }</td>
                     <td>
-                      <Tooltip placement="top" title={'Edit'}>
-                        <button 
-                          className="action-btn"
-                          onClick={() => fnAddEditGroup(gr) }
-                        >
-                          <FormOutlined />
-                        </button>
-                      </Tooltip>
+                      {gr.id == 1 || gr.id == 2 ? (
+                          <button 
+                            className="action-btn"
+                            disabled
+                          >
+                            <FormOutlined />
+                          </button>
+                      ):(
+                        <Tooltip placement="top" title={'Edit'}>
+                          <button 
+                            className="action-btn"
+                            onClick={() => fnAddEditGroup(gr) }
+                          >
+                            <FormOutlined />
+                          </button>
+                        </Tooltip>
+                      )}
+                      
                     </td>
                   </tr>
                 ))

@@ -51,7 +51,8 @@ function Project() {
   const [openAuidt, setOpenAudit] = useState(false)
 
   var companyid = sessionStorage.getItem('companyid')
-  var usergroup = sessionStorage.getItem('usergroup')
+  var groupid = sessionStorage.getItem('groupid')
+  var uid = sessionStorage.getItem('uid')
 
   const fnGoBack = () => {
     navigate('/projects')
@@ -167,7 +168,7 @@ function Project() {
           </Tooltip>
           <Tooltip title="Remove">
             {
-              usergroup = 1 || project.createdby ? (
+              groupid == 1 || groupid == 2 || project?.createdby == uid ? (
                 <Button type="primary" icon={<DeleteOutlined />} style={{backgroundColor: 'red', marginLeft: 8}} onClick={() => fnDeleteFile(record)}/>
               ):(
                 <Button type="primary" disabled icon={<DeleteOutlined />} style={{backgroundColor: 'gray', marginLeft: 8}} />
@@ -849,9 +850,23 @@ function Project() {
                     </Button>
                   </Form.Item> */}
                   <div className="form-actions">
-                  <button type="submit" className="btn btn-primary">
-                      Save Project
-                  </button>
+
+                  {
+                    JSON.stringify(project) == '{}' ? (
+                      <button type="submit" className="btn btn-primary">
+                          Save Project
+                      </button>
+                    ):(
+                      groupid == 1 || groupid == 2 || project?.createdby == uid ? (
+                        <button type="submit" className="btn btn-primary">
+                          Save Project
+                      </button>
+                      ):(
+                        null
+                      )
+                    )
+                  }
+                  
                   {
                       JSON.stringify(project) === "{}" ? (
                           null
@@ -877,9 +892,16 @@ function Project() {
               <Typography style={{...Styles.text}}>Tasks</Typography>
             </Col>
             <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                {JSON.stringify(project) == "{}" ? (null):(
-                  <Button type="primary" onClick={() => setCheckListModal(true)}>Add</Button>
-                )}
+                {
+                  JSON.stringify(project) == "{}" ? (null):(
+                    groupid == 1 || groupid == 2 || project?.createdby == uid ? (
+                      <Button type="primary" onClick={() => setCheckListModal(true)}>Add</Button>
+                    ):(
+                      null
+                    )
+                    
+                  )
+                }
             </Col>
           </Row>
           <Row>

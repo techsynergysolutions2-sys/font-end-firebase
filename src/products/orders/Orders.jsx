@@ -80,7 +80,6 @@ const Orders = () => {
             ) totals
 
             WHERE o.companyid = ${companyid} 
-            AND o.isactive = 1
             GROUP BY o.id
             ORDER BY o.orderdate DESC;
 
@@ -94,7 +93,9 @@ const Orders = () => {
         setTotalPending(data[0].pending_orders)
         setTotalCanceled(data[0].canceled_orders)
         setOrders(data);
-        setFilteredOrders(data);
+        // setFilteredOrders(data);
+
+        setFilteredOrders(data.filter(dt => dt.status != 4))
       }
       // setLoading(!loading)
       } catch (error) {
@@ -180,7 +181,7 @@ const Orders = () => {
               {filteredOrders.length > 0 ? (
                 filteredOrders.map((order) => (
                   <tr key={order.id}>
-                    <td>{order.ordernumber}</td>
+                    <td>{order.id}</td>
                     <td>{order.customername}</td>
                     <td>{order.orderdate?.replace('T', ' ')}</td>
                     <td>{Intl.NumberFormat(undefined,{style: 'currency', currency: 'USD'}).format(order.order_total)}</td>

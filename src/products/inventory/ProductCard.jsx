@@ -88,7 +88,7 @@ const ProductCard = ({ product,loaddata }) => {
         <img src={fileList[0]?.url} alt={fileList[0]?.name} />
       </div>
       <div className="product-info">
-        <div className="product-category">{product.category}</div>
+        {/* <div className="product-category">{product.category}</div> */}
         <h3 className="product-title">{product.title}</h3>
         <p className="product-description">{product.description}</p>
         <div className={`product-stock ${isactive}`}>

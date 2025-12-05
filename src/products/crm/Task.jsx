@@ -26,6 +26,7 @@ function Task() {
   const [openAuidt, setOpenAudit] = useState(false)
 
   var companyid = sessionStorage.getItem('companyid')
+  var uid = sessionStorage.getItem('uid')
 
   const fnGoBack = () => {
     navigate('/tasklist')
@@ -41,7 +42,7 @@ function Task() {
     try {
       let sql1 = `
                 SELECT e.* FROM employees e 
-                WHERE e.companyid = ${companyid} AND e.isactive = 1
+                WHERE e.companyid = ${companyid} AND e.isactive = 1 AND e.id = ${uid}
                 `
       const data = await fnGetDirectData('employees',sql1);
 

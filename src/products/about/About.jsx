@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Target, Zap, Shield, TrendingUp, Award } from 'lucide-react';
 import {useNavigate, Outlet } from 'react-router-dom'
+import { CheckCircleFilled } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 
 export default function AboutPage() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,36 +36,6 @@ export default function AboutPage() {
       icon: <TrendingUp size={40} />,
       title: 'Growth Minded',
       description: 'Empowering businesses to scale and achieve their full potential with intelligent tools.'
-    }
-  ];
-
-  const stats = [
-    { number: '50K+', label: 'Active Users' },
-    { number: '95%', label: 'Customer Satisfaction' },
-    { number: '150+', label: 'Countries' },
-    { number: '24/7', label: 'Support Available' }
-  ];
-
-  const team = [
-    {
-      name: 'Sarah Johnson',
-      role: 'CEO & Founder',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop'
-    },
-    {
-      name: 'Michael Chen',
-      role: 'CTO',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop'
-    },
-    {
-      name: 'Emily Rodriguez',
-      role: 'Head of Product',
-      image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=400&fit=crop'
-    },
-    {
-      name: 'David Park',
-      role: 'Head of Engineering',
-      image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop'
     }
   ];
 
@@ -371,7 +343,76 @@ export default function AboutPage() {
               />
             </div>
           </div>
+
+
+          <section class="matrix" aria-label="Feature matrix">
+            <div class="matrix-grid" role="table" aria-label="Features by plan">
+              <div class="matrix-head matrix-cell">Features</div>
+              <div class="matrix-head matrix-cell"></div>
+              <div class="matrix-head matrix-cell"></div>
+              <div class="matrix-head matrix-cell"></div>
+
+
+              <div class="matrix-cell feat-name">Inventory</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Orders</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Orders <Tooltip placement="rightTop" title={'Order API allows you to create orders by calling the create order API'}><a href='#' >API</a></Tooltip></div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Analytics</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Tasks</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Tasks</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Projects</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Tickets</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Leaves</div>
+              <div class="matrix-cell"><CheckCircleFilled style={{color: 'green'}}/></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name">Mobile App</div>
+              <div class="matrix-cell">Coming Soon</div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"></div>
+
+              <div class="matrix-cell feat-name"></div>
+              <div class="matrix-cell"></div>
+              <div class="matrix-cell"><button className="btn btn-cta" onClick={() => navigate('/login')} style={{fontSize: 15,width: 220}}>Start now</button></div>
+
+
+            </div>
+          </section>
+
         </div>
+
       </section>
 
 
@@ -407,12 +448,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-{/* 
-      <section className="content-section" style={{ background: '#f7fafc' }}>
-        <div className="container">
-          
-        </div>
-      </section> */}
 
       {/* Values Section */}
       <section className="content-section" style={{ background: '#f7fafc' }}>

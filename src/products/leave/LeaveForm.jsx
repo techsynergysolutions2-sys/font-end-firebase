@@ -19,14 +19,24 @@ const LeaveForm = () => {
   const [employees, setEmployees] = useState([])
   const [api, contextHolder] = notification.useNotification();
   const [openAuidt, setOpenAudit] = useState(false)
+  const [changeStatus, setChangeStatus] = useState(false)
 
   var companyid = sessionStorage.getItem('companyid')
+  var groupid = sessionStorage.getItem('groupid')
 
   useEffect(() => {
+  
+    if(groupid == 1 || groupid == 2){
+      setChangeStatus(true)
+    }else{
+      setChangeStatus(false)
+    }
     fnGetDataLoad()
+    
   },[])
 
   const fnGoBack = () => {
+    
     navigate('/leaves')
   }
 
@@ -54,6 +64,11 @@ const LeaveForm = () => {
       if(JSON.stringify(leave) === "{}" ){
           values['companyid'] = sessionStorage.getItem('companyid')
           values['createdby'] = sessionStorage.getItem('uid')
+          if(groupid != 1 && groupid != 2){
+            values['status'] = 1
+          }
+      
+    
 
           const data = await fnCreateData('leaves',"leaves", values, 'new');
           if(data.insertId != null || data.insertId != undefined){
@@ -80,6 +95,9 @@ const LeaveForm = () => {
           }
       }else{
         values['id'] = leave['id']
+        if(groupid != 1 && groupid != 2){
+          values['status'] = 1
+        }
         values['updateby'] = sessionStorage.getItem('uid')
         const data = await fnUpateData('leaves',"leaves", values,'id = ? AND isactive = ?',[leave['id'],1], 'update');
         if(data?.affectedRows > 0){
@@ -167,7 +185,7 @@ const LeaveForm = () => {
                     ]}
                     >
                     <Select showSearch filterOption={(input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase())} 
-                    allowClear={true} placeholder="Please select a status" size='large'>
+                    allowClear={true} placeholder="Please select a status" size='large' defaultValue={1}>
                         {
                         leave_status?.map((itm,key) => (
                             <Option value={itm.id} key={key}>{itm.label}</Option>

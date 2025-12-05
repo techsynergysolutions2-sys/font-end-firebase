@@ -184,15 +184,17 @@ export default function CompanyProfile() {
     try {
       let temp = amou * employees.length
       let temp2 = (amou * numSpace) * monthsDiff
+      let add_space = Intl.NumberFormat(undefined,{style: 'currency', currency: 'USD'}).format(temp2)
+      let renew = Intl.NumberFormat(undefined,{style: 'currency', currency: 'USD'}).format(temp)
       if(isModalOpenExpired){
         const res = await axios.post(`${url}/space`, {
-        amount: temp,
+        amount: renew,
         action: 'orders'
       });
       return res.data.id;
       }else{
         const res = await axios.post(`${url}/space`, {
-        amount: temp2,
+        amount: add_space,
         action: 'orders'
       });
       return res.data.id;
@@ -290,7 +292,7 @@ export default function CompanyProfile() {
     {contextHolder}
       {
         company == null ? (
-          <Skeleton active />
+          <Skeleton active style={{marginTop: 20, marginLeft: 20}}/>
         ):(
           <div style={{width: '100%', height: '98%',overflowY: 'scroll',scrollbarWidth: 'none'}}>
             <link 

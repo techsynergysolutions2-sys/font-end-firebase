@@ -9,7 +9,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 
 const Analytics = () => {
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState(0);
     const [revenue, setRevenue] = useState(0)
     const [inventory, setInventory] = useState(0)
     const [totalPending, setTotalPending] = useState(0)
@@ -42,8 +42,12 @@ const Analytics = () => {
       LEFT JOIN order_products op 
           ON o.id = op.orderid 
           AND op.isactive = 1
-      WHERE o.companyid = ${companyid};
+      WHERE o.companyid = ${companyid} AND o.isactive = 1;
 
+        `
+
+        let sql_indicators_2 = `
+          SELECT count(o.id) As total FROM orders o WHERE o.isactive = 1 AND o.status = 1; 
         `
   
         let sql_line = `
@@ -62,28 +66,51 @@ const Analytics = () => {
         `
 
         let sql_salesorders = `
-            SELECT o.id,o.ordernumber,o.customername,o.contactnumber,o.orderdate,o.status,CONCAT(ea.firstname, ' ', ea.lastname) AS assigned_to, 
-            CONCAT(ec.firstname, ' ', ec.lastname) AS created_by,op.quantity,op.price
-            FROM orders o
-            JOIN employees ea
-            ON o.assignto = ea.id
-            JOIN employees ec
-            ON o.createdby = ec.id
-            JOIN order_products op
-            ON o.id = op.orderid
-            WHERE o.isactive = 1 AND o.companyid = ${companyid};
+             SELECT
+              o.id,
+              o.customername,
+              o.contactnumber,
+              o.orderdate,
+              o.assignto,
+              op.price,
+              CONCAT(e.firstname, ' ', e.lastname) As created_by,
+              CONCAT(em.firstname, ' ', em.lastname) As assigned_to,
+              -- Calculate total per order
+              COALESCE(SUM(op.price * op.quantity), 0) AS order_total,
+              COALESCE(SUM(op.quantity), 0) AS order_q
+
+              FROM orders o
+              LEFT JOIN order_products op ON o.id = op.orderid
+              LEFT JOIN products p ON op.productid = p.id
+              LEFT JOIN employees e ON o.assignto = e.id
+              LEFT JOIN employees em ON o.createdby = em.id
+
+              WHERE o.companyid = ${companyid}
+              AND o.isactive = 1
+              GROUP BY o.id
+              ORDER BY o.orderdate DESC;
         `
 
         let sql_recentorders = `
-            SELECT o.id,o.ordernumber,o.customername,op.price FROM orders o
-            JOIN order_products op
-            ON o.id = op.orderid
-            WHERE o.isactive = 1 AND o.companyid = ${companyid}
-            ORDER BY o.id DESC
-            LIMIT 5
+            SELECT
+            o.id,
+            o.customername,
+            -- Calculate total per order
+            COALESCE(SUM(op.price * op.quantity), 0) AS order_total
+
+            FROM orders o
+            LEFT JOIN order_products op ON o.id = op.orderid
+            LEFT JOIN products p ON op.productid = p.id
+
+            WHERE o.companyid = ${companyid}
+            AND o.isactive = 1
+            GROUP BY o.id
+            ORDER BY o.orderdate DESC
+            LIMIT 5;
         `
         try {
           const data = await fnGetDirectData('dashboard',sql_indicators);
+          const data1 = await fnGetDirectData('dashboard',sql_indicators_2);
           const data2 = await fnGetDirectData('dashboardlinechart',sql_line);
           const data3 = await fnGetDirectData('dashboard',sql_salesorders);
           const data4 = await fnGetDirectData('dashboard',sql_recentorders);
@@ -91,7 +118,7 @@ const Analytics = () => {
           setRevenue(data[0].total_revenue)
           setInventory(data[0].total_inventory)
           setOrders(data[0].total_orders)
-          setTotalPending(data[0].pending_orders)
+          setTotalPending(data1[0].total)
 
           setLineData(data2)
 
@@ -139,7 +166,7 @@ const Analytics = () => {
             <Col span={8}>
                 <Card style={{ width: '100%', height: '350px'}}>
                     <h2 style={{fontSize: '1.1rem',fontWeight: '600'}}>Latest Orders</h2>
-                        <Row style={{marginTop: '30px'}}>
+                        <Row style={{height:'250px' ,marginTop: '30px', overflowY: 'scroll',scrollbarWidth: 'none'}}>
                             <Col span={24}>
                                 <div className="orders-table-container">
                                     <table className="orders-table">
@@ -154,9 +181,9 @@ const Analytics = () => {
                                         {recentOrders.length > 0 ? (
                                         recentOrders.map((or) => (
                                             <tr key={or.id}>
-                                            <td>{or.ordernumber}</td>
+                                            <td>{or.id}</td>
                                             <td>{or.customername}</td>
-                                            <td>${or.price}</td>
+                                            <td>{Intl.NumberFormat(undefined,{style: 'currency', currency: 'USD'}).format(or.order_total)}</td>
                                             </tr>
                                         ))
                                         ) : (
@@ -314,9 +341,8 @@ const ResentSales = ({salesorders}) => {
 
 
   const columns = [
-    { field: "id", headerName: "ID" },
     {
-      field: "ordernumber",
+      field: "id",
       headerName: "Order number",
       flex: 1
     },
@@ -346,7 +372,7 @@ const ResentSales = ({salesorders}) => {
       flex: 1
     },
     {
-      field: "quantity",
+      field: "order_q",
       headerName: "Quantity",
       type: "number",
       headerAlign: "left",
@@ -354,8 +380,8 @@ const ResentSales = ({salesorders}) => {
       flex: 1
     },
     {
-      field: "price",
-      headerName: "Price ( $ )",
+      field: "order_total",
+      headerName: "Total ( $ )",
       type: "number",
       headerAlign: "left",
       align: "left",

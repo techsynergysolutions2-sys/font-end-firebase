@@ -78,11 +78,12 @@ function Login(){
                         sessionStorage.setItem('uid',data2[0].id)
                         sessionStorage.setItem('expirydate',data2[0].expirydate)
                         sessionStorage.setItem('grouptitle',data2[0].title)
+                        sessionStorage.setItem('groupid',data2[0].groupid)
                         let groupid = data2[0].groupid
                         let groupidtitle = data2[0].title
                        
                         if(fnCheckExpiryDate()){
-                            if(groupidtitle != 'Administrator'){
+                            if(groupid != 1 || groupid != 2){
                                 api.warning({
                                     title: ``,
                                     description: 'Your subscription has expired. Please contact you administrator',
@@ -98,7 +99,7 @@ function Login(){
                                 }
                             
                         }else{
-                            if(groupidtitle != 'Administrator'){
+                            if(groupid != 1 || groupid != 1){
                                 sessionStorage.setItem('permissions',data3[0].permissions)
                             }else{
                                 sessionStorage.setItem('permissions',0)
@@ -191,7 +192,7 @@ function Login(){
         <div className="d-flex align-items-center justify-content-center vh-100 bg-light">
             <div className="card shadow p-4" style={{ maxWidth: "420px", width: "100%", borderRadius: "1.5rem" }}>
             <h3 className="text-center mb-3 fw-bold">Welcome Back</h3>
-            <p className="text-center text-muted mb-4">Login to continue to your dashboard</p>
+            <p className="text-center text-muted mb-4">Login to continue to your CRM</p>
 
 
             <Form
@@ -207,14 +208,14 @@ function Login(){
                 <div className="mb-3">
                     <label className="form-label fw-semibold">Email address</label>
                     <Form.Item layout="vertical" name="username" rules={[{ required: true, message: 'Please input your username!' }]} >
-                        <input className="form-control p-3" />
+                        <input className="form-control p-3" style={{ width: '150%'}} />
                     </Form.Item>
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label fw-semibold">Password</label>
-                    <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
-                        <input type="password" className="form-control p-3"/>
+                    <Form.Item name="password" className='field' rules={[{ required: true, message: 'Please input your password!' }]} >
+                        <input type="password" className="form-control p-3" style={{ width: '150%'}}/>
                     </Form.Item>
                 </div>
 

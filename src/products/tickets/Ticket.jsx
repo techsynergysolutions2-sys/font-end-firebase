@@ -26,8 +26,10 @@ const Ticket = () => {
   const [openAuidt, setOpenAudit] = useState(false)
 
   var companyid = sessionStorage.getItem('companyid')
+  var groupid = sessionStorage.getItem('groupid')
 
   useEffect(() => {
+    console.log(groupid)
     fnGetDataLoad()
   },[])
 
@@ -253,7 +255,7 @@ const Ticket = () => {
                 <Col span={11}>
                     <div className="form-group">
                         <label>Department</label>
-                        <Form.Item name="assignto" 
+                        <Form.Item name="department" 
                         rules={[
                             {
                             required: true,
@@ -273,6 +275,26 @@ const Ticket = () => {
                 </Col>
                 <Col span={2}></Col>
                 <Col span={11}>
+                    {
+                        groupid == 1 || groupid == 2 ? (
+                            <div className="form-group">
+                                <label>Assign to</label>
+                                <Form.Item name="assignto" 
+                                rules={[]}>
+                                <Select showSearch filterOption={(input, option) =>(option?.label ?? '').toLowerCase().includes(input.toLowerCase())} 
+                                allowClear={true} placeholder="Please select an employee" size='large'>
+                                    {
+                                    employees?.map((itm,key) => (
+                                        <Option value={itm.id} key={key}>{itm?.firstname} {itm?.lastname}</Option>
+                                    ))
+                                    }
+                                </Select>
+                                </Form.Item>
+                            </div>
+                        ):(
+                            null
+                        )
+                    }
                     
                 </Col>
             </Row>

@@ -15,6 +15,8 @@ const Tickets = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 8;
 
+  var groupid = sessionStorage.getItem('groupid')
+
   const fnNavNewTicket = (record) => {
     navigate("/ticket",{
       state: record
@@ -28,7 +30,9 @@ const Tickets = () => {
   const fnFetchData = async () => {
       var companyid = sessionStorage.getItem('companyid')
       var uid = sessionStorage.getItem('uid')
-      let sql = `
+      let sql;
+      if(groupid == 1 || groupid == 2){
+        sql = `
             SELECT t.*,CONCAT(e.firstname, ' ', e.lastname) AS fullname,
             CONCAT(ea.firstname, ' ', ea.lastname) AS assigned_fullname
             FROM tickets t
@@ -37,8 +41,21 @@ const Tickets = () => {
             JOIN employees ea
             ON t.assignto = ea.id
             WHERE t.isactive = 1 AND t.companyid = ${companyid}
-            AND (t.assignto = ${uid} OR t.assignto = NULL)
           `
+      }else{
+        sql = `
+            SELECT t.*,CONCAT(e.firstname, ' ', e.lastname) AS fullname,
+            CONCAT(ea.firstname, ' ', ea.lastname) AS assigned_fullname
+            FROM tickets t
+            JOIN employees e
+            ON t.createdby = e.id
+            JOIN employees ea
+            ON t.assignto = ea.id
+            WHERE t.isactive = 1 AND t.companyid = ${companyid}
+            AND (t.assignto = ${uid})
+          `
+      }
+      
       
       try {
       const data = await fnGetDirectData('orders',sql);
