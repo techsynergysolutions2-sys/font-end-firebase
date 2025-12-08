@@ -87,7 +87,7 @@ export const url = 'https://app-ihcagnmida-uc.a.run.app'
 export const host_url = 'http://localhost:3000'
 
 // export const amou = 4.99
-export const amou = 1.99
+export const amou = 0.5
 
 
 export const Task_Workflow_Status = [

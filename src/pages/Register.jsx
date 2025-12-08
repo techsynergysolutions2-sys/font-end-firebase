@@ -66,7 +66,7 @@ function Register() {
         {
           label: 'Price per employee',
           span: 'filled', // span = 2
-          children: '$4.99 usd',
+          children: Intl.NumberFormat(undefined,{style: 'currency', currency: 'USD'}).format(amou) ,
         },
         {
           label: 'Total',
@@ -117,7 +117,7 @@ function Register() {
       // Create employee data
       
       // Create company data
-      company['isactive'] = 0;
+      // company['isactive'] = 0;
 
       const data2 = await fnCreateData('company', 'companies', company, 'new');
 
