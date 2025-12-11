@@ -77,14 +77,14 @@ const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg", "application/pdf"
 
 // Live
 export const url = 'https://app-ihcagnmida-uc.a.run.app'
-// export const host_url = 'https://Ebencrm.com'
+export const host_url = 'https://eben-crm.com' 
 // export const host_url = 'crm-solutions-34e5f.firebaseapp.com'
 // export const host_url = 'crm-solutions-34e5f.web.app'
 
 
 //Testing
 // export const url = 'http://127.0.0.1:5001/crm-solutions-34e5f/us-central1/app'
-export const host_url = 'http://localhost:3000'
+// export const host_url = 'http://localhost:3000'
 
 // export const amou = 4.99
 export const amou = 0.5
