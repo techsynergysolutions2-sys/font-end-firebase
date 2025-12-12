@@ -198,10 +198,11 @@ function Register() {
   }
 
   const createOrder = async () => {
-
+    let ttl = (amou * company['employee_count']) * 12
+    console.log(ttl)
     try {
         const res = await axios.post(`${url}/payments`, {
-          amount: Intl.NumberFormat(undefined,{style: 'currency', currency: 'USD'}).format((amou * company['employee_count']) * 12) , // you can make this dynamic
+          amount: ttl, // you can make this dynamic
           action: 'orders'
         });
         return res.data.id;
