@@ -198,7 +198,7 @@ function Register() {
   }
 
   const createOrder = async () => {
-    let ttl = (amou * company['employee_count']) * 12
+    let ttl = (amou * 1) * 12
     console.log(ttl)
     try {
         const res = await axios.post(`${url}/payments`, {
@@ -238,7 +238,7 @@ function Register() {
 
         <Row justify="center" style={{marginTop: 40}}>
           {
-            current === 0  && (
+            current === 2  && (
               <Card style={{ width: 600, boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)" }}>
                 <Typography style={{textAlign: 'center', fontFamily: "'Poppins', sans-serif", fontSize: 28, fontWeight: 600, marginBottom: 15}}>Administrator</Typography>
                 <Form
@@ -456,7 +456,7 @@ function Register() {
           }
 
           {
-            current === 2  && (
+            current === 0  && (
               <Card style={{ width: 600, boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)" }}>
                 <Typography style={{textAlign: 'center', fontFamily: "'Poppins', sans-serif", fontSize: 28, fontWeight: 600, marginBottom: 15}}>Payment</Typography>
                 
