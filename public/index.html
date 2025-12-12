@@ -3,15 +3,16 @@
   <head>
     <meta http-equiv="Content-Security-Policy" 
     content="default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.paypal.com https://*.paypalobjects.com https://apis.google.com https://www.gstatic.com;
-    style-src 'self' 'unsafe-inline' https://*.paypal.com https://fonts.googleapis.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.paypal.com https://*.paypalobjects.com https://www.paypal.com https://www.sandbox.paypal.com https://apis.google.com https://www.gstatic.com;
+    style-src 'self' 'unsafe-inline' https://*.paypal.com https://www.paypal.com https://fonts.googleapis.com;
     font-src 'self' https://fonts.gstatic.com;
-    img-src 'self' data: blob: https://*.paypal.com https://*.paypalobjects.com https://*.googleapis.com https://*.gstatic.com;
-    connect-src 'self' https://*.paypal.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://app-ihcagnmida-uc.a.run.app;
-    frame-src 'self' https://*.paypal.com https://*.google.com;
+    img-src 'self' data: blob: https://*.paypal.com https://*.paypalobjects.com https://www.paypal.com https://*.googleapis.com https://*.gstatic.com;
+    connect-src 'self' https://*.paypal.com https://www.paypal.com https://www.sandbox.paypal.com https://*.paypalobjects.com https://idapps.paypal.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://app-ihcagnmida-uc.a.run.app;
+    frame-src 'self' https://*.paypal.com https://www.paypal.com https://www.sandbox.paypal.com https://*.google.com;
+    child-src 'self' https://*.paypal.com https://www.paypal.com;
     object-src 'none';
     base-uri 'self';
-    form-action 'self';">
+    form-action 'self' https://*.paypal.com;">
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/Logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
