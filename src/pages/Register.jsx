@@ -470,19 +470,14 @@ function Register() {
                   options={{
                     "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
                     currency: "USD",
-                    components: "buttons,card-fields",
+                    components: "buttons",
                     intent: "capture",
-                    vault: false,
                   }}
                 >
                   <PayPalButtons
                     style={{ layout: "vertical" }}
                     createOrder={createOrder}
                     onApprove={onApprove}
-                    onError={(err) => {
-                      console.error(err);
-                      setErrorMessage("An error occurred during payment.");
-                    }}
                   />
                 </PayPalScriptProvider>
                 <Row justify="center">
